@@ -1,0 +1,220 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Barra Lateral */
+.barraLateral {
+  width: 260px;
+  background: #1e293b;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+.cabecalhoLateral {
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logoLateral {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.navegacao {
+  flex: 1;
+  padding: 16px 0;
+}
+
+.linkNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  font-weight: 400;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.linkNav:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+}
+
+.linkNavAtivo {
+  background: rgba(26, 115, 232, 0.15);
+  color: var(--white);
+  border-left-color: var(--primary);
+  font-weight: 500;
+}
+
+.iconeNav {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.rodapeLateral {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.infoSessao {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Área principal */
+.principal {
+  flex: 1;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho */
+.cabecalho {
+  background: var(--white);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nomeUsuario {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.botaoSair {
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.botaoSair:hover {
+  background: var(--danger);
+  color: var(--white);
+}
+
+/* Conteúdo */
+.conteudo {
+  flex: 1;
+  padding: 32px;
+}
+
+/* Modal de confirmação de logout */
+.modalFundo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: escalarEntrar 0.2s ease-out;
+}
+
+@keyframes escalarEntrar {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modalTitulo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.modalTexto {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 24px;
+}
+
+.modalBotoes {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.botaoCancelar {
+  padding: 10px 20px;
+  background: var(--secondary);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.botaoCancelar:hover {
+  background: var(--border);
+}
+
+.botaoConfirmar {
+  padding: 10px 20px;
+  background: var(--danger);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.botaoConfirmar:hover {
+  background: #c82333;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .barraLateral {
+    width: 200px;
+  }
+  .principal {
+    margin-left: 200px;
+  }
+  .conteudo {
+    padding: 20px;
+  }
+}
