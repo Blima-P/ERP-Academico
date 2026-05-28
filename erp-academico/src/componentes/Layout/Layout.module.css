@@ -5,8 +5,8 @@
 
 /* Barra Lateral */
 .barraLateral {
-  width: 260px;
-  background: #1e293b;
+  width: 270px;
+  background: var(--gradient-dark);
   color: var(--white);
   display: flex;
   flex-direction: column;
@@ -15,68 +15,84 @@
   left: 0;
   bottom: 0;
   z-index: 100;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .cabecalhoLateral {
-  padding: 24px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logoLateral {
   font-size: 20px;
-  font-weight: 700;
-  color: var(--white);
+  font-weight: 800;
+  background: linear-gradient(135deg, #a78bfa, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .navegacao {
   flex: 1;
-  padding: 16px 0;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .linkNav {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 15px;
-  font-weight: 400;
-  transition: all 0.2s;
+  gap: 14px;
+  padding: 13px 24px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-weight: 450;
+  transition: all var(--transition);
   border-left: 3px solid transparent;
+  margin: 0 8px;
+  border-radius: 0 var(--radius) var(--radius) 0;
 }
 
 .linkNav:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+  border-left-color: rgba(255, 255, 255, 0.2);
 }
 
 .linkNavAtivo {
-  background: rgba(26, 115, 232, 0.15);
+  background: rgba(79, 70, 229, 0.2);
   color: var(--white);
-  border-left-color: var(--primary);
-  font-weight: 500;
+  border-left-color: var(--primary-light);
+  font-weight: 600;
 }
 
 .iconeNav {
   font-size: 18px;
   width: 24px;
   text-align: center;
+  transition: transform var(--transition);
+}
+
+.linkNav:hover .iconeNav {
+  transform: scale(1.15);
 }
 
 .rodapeLateral {
-  padding: 16px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .infoSessao {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
 }
 
 /* Área principal */
 .principal {
   flex: 1;
-  margin-left: 260px;
+  margin-left: 270px;
   display: flex;
   flex-direction: column;
 }
@@ -84,12 +100,12 @@
 /* Cabeçalho */
 .cabecalho {
   background: var(--white);
-  padding: 16px 32px;
+  padding: 16px 36px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -98,28 +114,31 @@
 .nomeUsuario {
   font-size: 14px;
   color: var(--text-light);
+  font-weight: 500;
 }
 
 .botaoSair {
-  padding: 8px 16px;
+  padding: 8px 18px;
   background: transparent;
   color: var(--danger);
-  border: 1px solid var(--danger);
+  border: 1.5px solid var(--danger);
   border-radius: var(--radius);
   font-size: 13px;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all var(--transition);
 }
 
 .botaoSair:hover {
   background: var(--danger);
   color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
 }
 
 /* Conteúdo */
 .conteudo {
   flex: 1;
-  padding: 32px;
+  padding: 36px;
 }
 
 /* Modal de confirmação de logout */
@@ -129,7 +148,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,30 +164,31 @@
 
 .modal {
   background: var(--white);
-  border-radius: 12px;
-  padding: 32px;
-  max-width: 400px;
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  max-width: 420px;
   width: 90%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: escalarEntrar 0.2s ease-out;
+  box-shadow: var(--shadow-xl);
+  animation: escalarEntrar 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes escalarEntrar {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from { transform: scale(0.92) translateY(10px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .modalTitulo {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .modalTexto {
   font-size: 14px;
   color: var(--text-light);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  line-height: 1.5;
 }
 
 .modalBotoes {
@@ -177,14 +198,14 @@
 }
 
 .botaoCancelar {
-  padding: 10px 20px;
+  padding: 10px 22px;
   background: var(--secondary);
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-size: 14px;
   font-weight: 500;
-  transition: background 0.2s;
+  transition: all var(--transition);
 }
 
 .botaoCancelar:hover {
@@ -192,29 +213,31 @@
 }
 
 .botaoConfirmar {
-  padding: 10px 20px;
+  padding: 10px 22px;
   background: var(--danger);
   color: var(--white);
   border: none;
   border-radius: var(--radius);
   font-size: 14px;
   font-weight: 500;
-  transition: background 0.2s;
+  transition: all var(--transition);
 }
 
 .botaoConfirmar:hover {
-  background: #c82333;
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 /* Responsivo */
 @media (max-width: 768px) {
   .barraLateral {
-    width: 200px;
+    width: 220px;
   }
   .principal {
-    margin-left: 200px;
+    margin-left: 220px;
   }
   .conteudo {
-    padding: 20px;
+    padding: 24px;
   }
 }
