@@ -1,0 +1,40 @@
+.pagina { max-width: 1200px; }
+.cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.titulo { font-size: 24px; font-weight: 600; color: var(--text); }
+.botaoExportar { padding: 10px 20px; background: var(--success); color: white; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; transition: background 0.2s; }
+.botaoExportar:hover { background: #218838; }
+.botaoExportar:disabled { background: #a0c4a0; cursor: not-allowed; }
+.carregando { text-align: center; padding: 60px; color: var(--text-light); font-size: 15px; }
+
+/* Totalizadores */
+.totais { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.totalCard { background: var(--white); border-radius: var(--radius); padding: 20px; text-align: center; box-shadow: var(--shadow); border-top: 3px solid var(--border); }
+.totalAtiva { border-top-color: var(--success); }
+.totalTrancada { border-top-color: #e65100; }
+.totalConcluida { border-top-color: var(--primary); }
+.totalValor { display: block; font-size: 28px; font-weight: 700; color: var(--text); }
+.totalLabel { display: block; font-size: 12px; color: var(--text-light); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Filtros */
+.filtros { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.campoFiltro { padding: 10px 14px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 14px; outline: none; min-width: 180px; }
+.campoFiltro:focus { border-color: var(--primary); }
+
+.vazio { text-align: center; padding: 60px 20px; color: var(--text-light); font-size: 15px; background: var(--white); border-radius: var(--radius); border: 2px dashed var(--border); }
+
+/* Tabela */
+.tabela { background: var(--white); border-radius: var(--radius); overflow-x: auto; box-shadow: var(--shadow); }
+.tabela table { width: 100%; border-collapse: collapse; min-width: 800px; }
+.tabela th { text-align: left; padding: 14px 16px; background: #f8f9fa; font-size: 13px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border); }
+.tabela td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border); }
+.tabela td small { color: var(--text-light); font-size: 12px; }
+.tabela tr:last-child td { border-bottom: none; }
+.tabela tr:hover { background: #f8f9fa; }
+.badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+.badgeAtiva { background: #e8f5e9; color: #2e7d32; }
+.badgeTrancada { background: #fff3e0; color: #e65100; }
+.badgeConcluída { background: #e3f2fd; color: #1565c0; }
+
+@media (max-width: 768px) {
+  .totais { grid-template-columns: repeat(2, 1fr); }
+}

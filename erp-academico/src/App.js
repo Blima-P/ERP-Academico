@@ -4,6 +4,10 @@ import RotaPrivada from './componentes/RotaPrivada/RotaPrivada';
 import Layout from './componentes/Layout/Layout';
 import Login from './paginas/Login/Login';
 import PainelInicial from './paginas/PainelInicial/PainelInicial';
+import Cursos from './paginas/Cursos/Cursos';
+import Alunos from './paginas/Alunos/Alunos';
+import Matriculas from './paginas/Matriculas/Matriculas';
+import Relatorio from './paginas/Relatorio/Relatorio';
 
 function App() {
   return (
@@ -23,10 +27,10 @@ function App() {
             }
           >
             <Route index element={<PainelInicial />} />
-            <Route path="alunos" element={<h2>👨‍🎓 Página de Alunos (em breve)</h2>} />
-            <Route path="cursos" element={<h2>📚 Página de Cursos (em breve)</h2>} />
-            <Route path="matriculas" element={<h2>📋 Página de Matrículas (em breve)</h2>} />
-            <Route path="relatorio" element={<h2>📈 Relatório (em breve)</h2>} />
+            <Route path="alunos" element={<Alunos />} />
+            <Route path="cursos" element={<Cursos />} />
+            <Route path="matriculas" element={<Matriculas />} />
+            <Route path="relatorio" element={<Relatorio />} />
           </Route>
 
           {/* Qualquer rota desconhecida redireciona para / */}

@@ -1,0 +1,40 @@
+.pagina { max-width: 1000px; }
+.cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.titulo { font-size: 24px; font-weight: 600; color: var(--text); }
+.botaoNovo { padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; transition: background 0.2s; }
+.botaoNovo:hover { background: var(--primary-dark); }
+.erro { background: #fdecea; color: var(--danger); padding: 12px; border-radius: var(--radius); margin-bottom: 16px; font-size: 14px; }
+.filtros { margin-bottom: 20px; }
+.campoBusca { width: 100%; max-width: 400px; padding: 10px 16px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 14px; outline: none; transition: border-color 0.2s; }
+.campoBusca:focus { border-color: var(--primary); }
+.vazio { text-align: center; padding: 60px 20px; color: var(--text-light); font-size: 15px; background: var(--white); border-radius: var(--radius); border: 2px dashed var(--border); }
+.carregando { text-align: center; padding: 60px; color: var(--text-light); font-size: 15px; }
+.tabela { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.tabela table { width: 100%; border-collapse: collapse; }
+.tabela th { text-align: left; padding: 14px 16px; background: #f8f9fa; font-size: 13px; font-weight: 600; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border); }
+.tabela td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border); }
+.tabela tr:last-child td { border-bottom: none; }
+.tabela tr:hover { background: #f8f9fa; }
+.badge { display: inline-block; padding: 4px 10px; background: #e8f5e9; color: #2e7d32; border-radius: 12px; font-size: 12px; font-weight: 500; }
+.acoes { display: flex; gap: 8px; }
+.botaoEditar, .botaoExcluir { background: none; border: none; font-size: 16px; padding: 4px 8px; border-radius: 4px; transition: background 0.2s; }
+.botaoEditar:hover { background: #e3f2fd; }
+.botaoExcluir:hover { background: #fdecea; }
+.modalFundo { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal { background: var(--white); border-radius: 12px; padding: 32px; max-width: 480px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.modalTitulo { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: var(--text); }
+.modalTexto { font-size: 14px; color: var(--text-light); margin-bottom: 24px; }
+.modalBotoes { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+.grupoCampo { margin-bottom: 16px; }
+.rotulo { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.campo { width: 100%; padding: 10px 14px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 14px; outline: none; transition: border-color 0.2s; }
+.campo:focus { border-color: var(--primary); }
+.campoErro { border-color: var(--danger); }
+.msgErro { font-size: 12px; color: var(--danger); margin-top: 4px; display: block; }
+.botaoCancelar { padding: 10px 20px; background: var(--secondary); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; }
+.botaoCancelar:hover { background: var(--border); }
+.botaoSalvar { padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; }
+.botaoSalvar:hover { background: var(--primary-dark); }
+.botaoSalvar:disabled { background: #a0c4f1; cursor: not-allowed; }
+.botaoExcluirConfirmar { padding: 10px 20px; background: var(--danger); color: white; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; }
+.botaoExcluirConfirmar:hover { background: #c82333; }

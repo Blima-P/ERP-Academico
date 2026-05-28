@@ -53,3 +53,55 @@
   font-weight: 700;
   color: var(--text);
 }
+
+/* Últimas matrículas */
+.secaoRecentes {
+  margin-top: 40px;
+}
+
+.secaoTitulo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.listaRecentes {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.itemRecente {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+
+.itemRecente:last-child {
+  border-bottom: none;
+}
+
+.recenteNome {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.recenteCurso {
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.recenteStatus {
+  font-size: 12px;
+  padding: 3px 8px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 10px;
+  font-weight: 500;
+}

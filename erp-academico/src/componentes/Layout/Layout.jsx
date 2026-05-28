@@ -12,8 +12,8 @@ function Layout() {
     setMostrarConfirmacao(true);
   }
 
-  function confirmarSaida() {
-    sair();
+  async function confirmarSaida() {
+    await sair();
     navegar('/login');
   }
 
@@ -73,7 +73,7 @@ function Layout() {
         </nav>
         <div className={estilos.rodapeLateral}>
           <p className={estilos.infoSessao}>
-            🕐 Login: {usuario?.ultimoLogin || '—'}
+            🕐 Sessão ativa
           </p>
         </div>
       </aside>
