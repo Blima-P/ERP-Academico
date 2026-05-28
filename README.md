@@ -15,7 +15,7 @@ Projeto React desenvolvido para a matéria de **Programação Web** (UCB - Terç
 
 ###  Como usar
 1. `npm install`
-2. `npm run dev`
+2. `npm start`
 
 **Alunos:** Pedro Braga de Lima , Maria Clara Paiva Oliveira Camelo, Maria Clara Ferreira Dos Santos, Nicole Reinaldo De Carvalho. <br>
 **Professor:** Joao Evangelista de Souza
