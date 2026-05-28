@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { buscarTodos, criarDocumento, atualizarDocumento, excluirDocumento } from '../../firebase/banco';
+import TabelaDados from '../../componentes/TabelaDados/TabelaDados';
 import estilos from './Cursos.module.css';
 
 function Cursos() {
@@ -140,33 +141,17 @@ function Cursos() {
           {busca ? 'Nenhum curso encontrado para essa busca.' : 'Nenhum curso cadastrado. Clique em "+ Novo Curso" para começar.'}
         </div>
       ) : (
-        <div className={estilos.tabela}>
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Carga Horária</th>
-                <th>Turno</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cursosFiltrados.map((curso) => (
-                <tr key={curso.id}>
-                  <td>{curso.nome}</td>
-                  <td>{curso.carga_horaria}h</td>
-                  <td><span className={estilos.badge}>{curso.turno}</span></td>
-                  <td>
-                    <div className={estilos.acoes}>
-                      <button className={estilos.botaoEditar} onClick={() => abrirEditar(curso)}>✏️</button>
-                      <button className={estilos.botaoExcluir} onClick={() => setExcluindo(curso)}>🗑️</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <TabelaDados
+          colunas={[
+            { chave: 'nome', titulo: 'Nome' },
+            { chave: 'carga_horaria', titulo: 'Carga Horária', renderizar: (curso) => `${curso.carga_horaria}h` },
+            { chave: 'turno', titulo: 'Turno', renderizar: (curso) => <span className={estilos.badge}>{curso.turno}</span> }
+          ]}
+          dados={cursosFiltrados}
+          aoEditar={abrirEditar}
+          aoExcluir={setExcluindo}
+          mensagemVazio="Nenhum curso encontrado."
+        />
       )}
 
       {/* Modal Formulário */}

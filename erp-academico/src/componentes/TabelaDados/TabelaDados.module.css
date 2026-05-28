@@ -1,0 +1,13 @@
+.tabela { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.tabela table { width: 100%; border-collapse: collapse; }
+.tabela th { text-align: left; padding: 16px 20px; background: var(--secondary); font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid var(--border); }
+.tabela td { padding: 16px 20px; font-size: 14px; border-bottom: 1px solid var(--border-light); color: var(--text); }
+.tabela tr:last-child td { border-bottom: none; }
+.tabela tr:hover { background: rgba(79, 70, 229, 0.02); }
+.tabela tbody tr:nth-child(even) { background: var(--secondary); }
+.tabela tbody tr:nth-child(even):hover { background: rgba(79, 70, 229, 0.04); }
+.vazio { text-align: center; padding: 70px 20px; color: var(--text-light); font-size: 15px; background: var(--white); border-radius: var(--radius-lg); border: 2px dashed var(--border); }
+.acoes { display: flex; gap: 6px; }
+.botaoEditar, .botaoExcluir { background: none; border: 1px solid transparent; font-size: 16px; padding: 6px 10px; border-radius: var(--radius); transition: all var(--transition); }
+.botaoEditar:hover { background: var(--info-light); border-color: rgba(59, 130, 246, 0.2); transform: scale(1.1); }
+.botaoExcluir:hover { background: var(--danger-light); border-color: rgba(239, 68, 68, 0.2); transform: scale(1.1); }

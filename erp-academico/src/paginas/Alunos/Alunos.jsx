@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { buscarTodos, criarDocumento, atualizarDocumento, excluirDocumento } from '../../firebase/banco';
+import TabelaDados from '../../componentes/TabelaDados/TabelaDados';
 import estilos from './Alunos.module.css';
 
 function Alunos() {
@@ -158,35 +159,18 @@ function Alunos() {
           {busca ? 'Nenhum aluno encontrado.' : 'Nenhum aluno cadastrado. Clique em "+ Novo Aluno" para começar.'}
         </div>
       ) : (
-        <div className={estilos.tabela}>
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Idade</th>
-                <th>Curso</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {alunosFiltrados.map((aluno) => (
-                <tr key={aluno.id}>
-                  <td>{aluno.nome}</td>
-                  <td>{aluno.email}</td>
-                  <td>{aluno.idade}</td>
-                  <td><span className={estilos.badge}>{getNomeCurso(aluno.curso_id)}</span></td>
-                  <td>
-                    <div className={estilos.acoes}>
-                      <button className={estilos.botaoEditar} onClick={() => abrirEditar(aluno)}>✏️</button>
-                      <button className={estilos.botaoExcluir} onClick={() => setExcluindo(aluno)}>🗑️</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <TabelaDados
+          colunas={[
+            { chave: 'nome', titulo: 'Nome' },
+            { chave: 'email', titulo: 'E-mail' },
+            { chave: 'idade', titulo: 'Idade' },
+            { chave: 'curso_id', titulo: 'Curso', renderizar: (aluno) => <span className={estilos.badge}>{getNomeCurso(aluno.curso_id)}</span> }
+          ]}
+          dados={alunosFiltrados}
+          aoEditar={abrirEditar}
+          aoExcluir={setExcluindo}
+          mensagemVazio="Nenhum aluno encontrado."
+        />
       )}
 
       {/* Modal Formulário */}
