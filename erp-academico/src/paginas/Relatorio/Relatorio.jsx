@@ -9,6 +9,7 @@ function Relatorio() {
   const [carregando, setCarregando] = useState(true);
   const [filtroCurso, setFiltroCurso] = useState('');
   const [filtroStatus, setFiltroStatus] = useState('');
+  const [filtroAluno, setFiltroAluno] = useState('');
 
   useEffect(() => {
     carregarDados();
@@ -55,6 +56,11 @@ function Relatorio() {
 
   // Aplicar filtros
   const dadosFiltrados = dadosRelatorio
+    .filter(
+     (d) =>
+        !filtroAluno ||
+        d.nomeAluno.toLowerCase().includes(filtroAluno.toLowerCase())
+    )
     .filter((d) => !filtroCurso || d.nomeCurso === filtroCurso)
     .filter((d) => !filtroStatus || d.status === filtroStatus);
 
@@ -115,6 +121,13 @@ function Relatorio() {
 
       {/* Filtros */}
       <div className={estilos.filtros}>
+        <input
+          className={estilos.campoFiltro}
+          type="text"
+          placeholder="Buscar aluno..."
+          value={filtroAluno}
+          onChange={(e) => setFiltroAluno(e.target.value)}
+        />
         <select
           className={estilos.campoFiltro}
           value={filtroCurso}
