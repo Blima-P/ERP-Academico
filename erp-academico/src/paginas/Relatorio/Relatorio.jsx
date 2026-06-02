@@ -27,10 +27,20 @@ function Relatorio() {
     setCarregando(false);
   }
 
-  // JOIN: cruzar matrículas com alunos e cursos usando map/find
+  // Criando mapas para buscar por ID
+  const alunosMap = new Map(
+    alunos.map((aluno) => [aluno.id, aluno])
+  );
+
+  const cursosMap = new Map(
+    cursos.map((curso) => [curso.id, curso])
+  );
+
+  // JOIN: cruzar matrículas com alunos e cursos usando map
   const dadosRelatorio = matriculas.map((matricula) => {
-    const aluno = alunos.find((a) => a.id === matricula.aluno_id);
-    const curso = cursos.find((c) => c.id === matricula.curso_id);
+    const aluno = alunosMap.get(matricula.aluno_id);
+    const curso = cursosMap.get(matricula.curso_id);
+
     return {
       id: matricula.id,
       nomeAluno: aluno ? aluno.nome : 'Aluno não encontrado',
