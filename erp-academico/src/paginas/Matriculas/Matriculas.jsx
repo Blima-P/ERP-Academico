@@ -112,9 +112,10 @@ function Matriculas() {
 
   function abrirEditar(matricula) {
     setEditando(matricula);
+    const aluno = alunos.find((a) => a.id === matricula.aluno_id);
     setFormulario({
       aluno_id: matricula.aluno_id,
-      curso_id: matricula.curso_id,
+      curso_id: aluno ? aluno.curso_id : matricula.curso_id,
       data_matricula: matricula.data_matricula,
       status: matricula.status
     });
@@ -217,7 +218,14 @@ function Matriculas() {
                 <select
                   className={`${estilos.campo} ${errosForm.aluno_id ? estilos.campoErro : ''}`}
                   value={formulario.aluno_id}
-                  onChange={(e) => setFormulario({ ...formulario, aluno_id: e.target.value })}
+                  onChange={(e) => {
+                    const alunoSelecionado = alunos.find((a) => a.id === e.target.value);
+                    setFormulario({
+                      ...formulario,
+                      aluno_id: e.target.value,
+                      curso_id: alunoSelecionado ? alunoSelecionado.curso_id : ''
+                    });
+                  }}
                 >
                   <option value="">Selecione um aluno</option>
                   {alunos.map((aluno) => (
@@ -228,16 +236,13 @@ function Matriculas() {
               </div>
               <div className={estilos.grupoCampo}>
                 <label className={estilos.rotulo}>Curso</label>
-                <select
-                  className={`${estilos.campo} ${errosForm.curso_id ? estilos.campoErro : ''}`}
-                  value={formulario.curso_id}
-                  onChange={(e) => setFormulario({ ...formulario, curso_id: e.target.value })}
-                >
-                  <option value="">Selecione um curso</option>
-                  {cursos.map((curso) => (
-                    <option key={curso.id} value={curso.id}>{curso.nome} ({curso.turno})</option>
-                  ))}
-                </select>
+                <input
+                  type="text"
+                  className={estilos.campo}
+                  value={formulario.curso_id ? getNomeCurso(formulario.curso_id) : ''}
+                  disabled
+                  placeholder="Selecione um aluno para preencher o curso"
+                />
                 {errosForm.curso_id && <span className={estilos.msgErro}>{errosForm.curso_id}</span>}
               </div>
               <div className={estilos.grupoCampo}>
