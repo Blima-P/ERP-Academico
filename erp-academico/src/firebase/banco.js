@@ -5,9 +5,7 @@ import {
   getDoc,
   addDoc,
   updateDoc,
-  deleteDoc,
-  query,
-  where
+  deleteDoc
 } from 'firebase/firestore';
 import { db } from './configuracao';
 
@@ -72,16 +70,3 @@ export async function excluirDocumento(colecao, id) {
   }
 }
 
-export async function buscarComFiltro(colecao, campo, operador, valor) {
-  try {
-    const q = query(collection(db, colecao), where(campo, operador, valor));
-    const snapshot = await getDocs(q);
-    const dados = snapshot.docs.map((d) => ({
-      id: d.id,
-      ...d.data()
-    }));
-    return { sucesso: true, dados };
-  } catch (erro) {
-    return { sucesso: false, mensagem: 'Erro ao buscar dados: ' + erro.message };
-  }
-}

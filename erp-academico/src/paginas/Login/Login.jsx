@@ -3,7 +3,6 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { useAutenticacao } from '../../contextos/ContextoAutenticacao';
 import estilos from './Login.module.css';
 
-//estados do formulario
 function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -41,7 +40,6 @@ function Login() {
     return novosErros;
   }
 
-  //validação em tempo real
   function aoMudarEmail(e) {
     const valor = e.target.value;
     setEmail(valor);
