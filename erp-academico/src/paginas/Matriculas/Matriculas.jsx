@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { buscarTodos, criarDocumento, atualizarDocumento, excluirDocumento } from '../../firebase/banco';
+import TabelaDados from '../../componentes/TabelaDados/TabelaDados';
 import estilos from './Matriculas.module.css';
 
 function Matriculas() {
@@ -156,7 +157,7 @@ function Matriculas() {
         </button>
       </div>
 
-      {erro && <div className={estilos.erro}>{erro}</div>}
+      {erro && <div className={estilos.erro}>{erro} <button className={estilos.botaoFecharErro} onClick={() => setErro('')}>✕</button></div>}
 
       <div className={estilos.filtros}>
         <select
@@ -176,35 +177,18 @@ function Matriculas() {
           {filtroStatus ? 'Nenhuma matrícula com esse status.' : 'Nenhuma matrícula cadastrada. Clique em "+ Nova Matrícula" para começar.'}
         </div>
       ) : (
-        <div className={estilos.tabela}>
-          <table>
-            <thead>
-              <tr>
-                <th>Aluno</th>
-                <th>Curso</th>
-                <th>Data Matrícula</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {matriculasFiltradas.map((matricula) => (
-                <tr key={matricula.id}>
-                  <td>{getNomeAluno(matricula.aluno_id)}</td>
-                  <td>{getNomeCurso(matricula.curso_id)}</td>
-                  <td>{matricula.data_matricula}</td>
-                  <td><span className={`${estilos.badge} ${getCorStatus(matricula.status)}`}>{matricula.status}</span></td>
-                  <td>
-                    <div className={estilos.acoes}>
-                      <button className={estilos.botaoEditar} onClick={() => abrirEditar(matricula)}>✏️</button>
-                      <button className={estilos.botaoExcluir} onClick={() => setExcluindo(matricula)}>🗑️</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <TabelaDados
+          colunas={[
+            { chave: 'aluno_id', titulo: 'Aluno', renderizar: (m) => getNomeAluno(m.aluno_id) },
+            { chave: 'curso_id', titulo: 'Curso', renderizar: (m) => getNomeCurso(m.curso_id) },
+            { chave: 'data_matricula', titulo: 'Data Matrícula' },
+            { chave: 'status', titulo: 'Status', renderizar: (m) => <span className={`${estilos.badge} ${getCorStatus(m.status)}`}>{m.status}</span> }
+          ]}
+          dados={matriculasFiltradas}
+          aoEditar={abrirEditar}
+          aoExcluir={setExcluindo}
+          mensagemVazio="Nenhuma matrícula encontrada."
+        />
       )}
 
       {/* Modal Formulário */}
@@ -214,10 +198,12 @@ function Matriculas() {
             <h2 className={estilos.modalTitulo}>{editando ? 'Editar Matrícula' : 'Nova Matrícula'}</h2>
             <form onSubmit={aoSalvar}>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Aluno</label>
+                <label className={estilos.rotulo} htmlFor="aluno_id">Aluno</label>
                 <select
+                  id="aluno_id"
                   className={`${estilos.campo} ${errosForm.aluno_id ? estilos.campoErro : ''}`}
                   value={formulario.aluno_id}
+                  disabled={!!editando}
                   onChange={(e) => {
                     const alunoSelecionado = alunos.find((a) => a.id === e.target.value);
                     setFormulario({
@@ -235,8 +221,9 @@ function Matriculas() {
                 {errosForm.aluno_id && <span className={estilos.msgErro}>{errosForm.aluno_id}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Curso</label>
+                <label className={estilos.rotulo} htmlFor="curso_id">Curso</label>
                 <input
+                  id="curso_id"
                   type="text"
                   className={estilos.campo}
                   value={formulario.curso_id ? getNomeCurso(formulario.curso_id) : ''}
@@ -246,8 +233,9 @@ function Matriculas() {
                 {errosForm.curso_id && <span className={estilos.msgErro}>{errosForm.curso_id}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Data da Matrícula</label>
+                <label className={estilos.rotulo} htmlFor="data_matricula">Data da Matrícula</label>
                 <input
+                  id="data_matricula"
                   type="date"
                   className={`${estilos.campo} ${errosForm.data_matricula ? estilos.campoErro : ''}`}
                   value={formulario.data_matricula}
@@ -256,8 +244,9 @@ function Matriculas() {
                 {errosForm.data_matricula && <span className={estilos.msgErro}>{errosForm.data_matricula}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Status</label>
+                <label className={estilos.rotulo} htmlFor="status">Status</label>
                 <select
+                  id="status"
                   className={`${estilos.campo} ${errosForm.status ? estilos.campoErro : ''}`}
                   value={formulario.status}
                   onChange={(e) => setFormulario({ ...formulario, status: e.target.value })}
