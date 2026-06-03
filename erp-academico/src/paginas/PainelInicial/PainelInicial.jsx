@@ -1,3 +1,5 @@
+// PainelInicial — Dashboard com contagens e últimas matrículas
+// Faz JOIN entre matrículas, alunos e cursos para exibir dados relacionados
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAutenticacao } from '../../contextos/ContextoAutenticacao';

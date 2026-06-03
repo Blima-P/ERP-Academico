@@ -1,3 +1,6 @@
+// Cursos — Página de CRUD completo para gerenciar cursos
+// Possui Create (cadastro com validação), Read (listagem com TabelaDados),
+// Update (edição) e Delete (exclusão com confirmação)
 import { useState, useEffect } from 'react';
 import { buscarTodos, criarDocumento, atualizarDocumento, excluirDocumento } from '../../firebase/banco';
 import TabelaDados from '../../componentes/TabelaDados/TabelaDados';

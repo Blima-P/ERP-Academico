@@ -1,3 +1,6 @@
+// Relatório — Tela que demonstra o JOIN entre entidades
+// Cruza Matrículas + Alunos + Cursos usando map() e find()
+// Possui filtros por curso e status, totalizadores e exportação CSV
 import { useState, useEffect } from 'react';
 import { buscarTodos } from '../../firebase/banco';
 import estilos from './Relatorio.module.css';

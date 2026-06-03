@@ -1,9 +1,12 @@
+// Login — Tela de autenticação do sistema
+// Valida campos em tempo real e usa o contexto de autenticação para fazer login
 import { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAutenticacao } from '../../contextos/ContextoAutenticacao';
 import estilos from './Login.module.css';
 
 function Login() {
+  // Estados do formulário de login
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -14,6 +17,7 @@ function Login() {
   const { entrar, estaAutenticado } = useAutenticacao();
   const navegar = useNavigate();
 
+  // Se já está logado, redireciona para a página inicial
   if (estaAutenticado) {
     return <Navigate to="/" replace />;
   }

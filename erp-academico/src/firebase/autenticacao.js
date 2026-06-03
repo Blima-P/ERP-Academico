@@ -1,3 +1,4 @@
+// Funções de autenticação — login, logout e recuperação de senha
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -5,6 +6,7 @@ import {
 } from 'firebase/auth';
 import { auth } from './configuracao';
 
+// Traduz os códigos de erro do Firebase para mensagens amigáveis em português
 function traduzirErro(codigoErro) {
   const erros = {
     'auth/user-not-found': 'Usuário não encontrado',
@@ -18,6 +20,7 @@ function traduzirErro(codigoErro) {
   return erros[codigoErro] || 'Erro ao fazer login. Tente novamente';
 }
 
+// Faz login com e-mail e senha usando o Firebase Auth
 export async function entrarComEmail(email, senha) {
   try {
     const resultado = await signInWithEmailAndPassword(auth, email, senha);
@@ -27,6 +30,7 @@ export async function entrarComEmail(email, senha) {
   }
 }
 
+// Faz logout do sistema
 export async function sairDoSistema() {
   try {
     await signOut(auth);
@@ -36,6 +40,7 @@ export async function sairDoSistema() {
   }
 }
 
+// Envia e-mail de redefinição de senha
 export async function enviarRedefinicaoSenha(email) {
   try {
     await sendPasswordResetEmail(auth, email);
