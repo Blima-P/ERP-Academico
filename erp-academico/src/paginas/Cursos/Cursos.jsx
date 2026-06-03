@@ -124,7 +124,7 @@ function Cursos() {
         </button>
       </div>
 
-      {erro && <div className={estilos.erro}>{erro}</div>}
+      {erro && <div className={estilos.erro}>{erro} <button className={estilos.botaoFecharErro} onClick={() => setErro('')}>✕</button></div>}
 
       <div className={estilos.filtros}>
         <input
@@ -161,8 +161,9 @@ function Cursos() {
             <h2 className={estilos.modalTitulo}>{editando ? 'Editar Curso' : 'Novo Curso'}</h2>
             <form onSubmit={aoSalvar}>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Nome do Curso</label>
+                <label className={estilos.rotulo} htmlFor="nome">Nome do Curso</label>
                 <input
+                  id="nome"
                   type="text"
                   className={`${estilos.campo} ${errosForm.nome ? estilos.campoErro : ''}`}
                   value={formulario.nome}
@@ -172,8 +173,9 @@ function Cursos() {
                 {errosForm.nome && <span className={estilos.msgErro}>{errosForm.nome}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Carga Horária (horas)</label>
+                <label className={estilos.rotulo} htmlFor="carga_horaria">Carga Horária (horas)</label>
                 <input
+                  id="carga_horaria"
                   type="number"
                   className={`${estilos.campo} ${errosForm.carga_horaria ? estilos.campoErro : ''}`}
                   value={formulario.carga_horaria}
@@ -184,8 +186,9 @@ function Cursos() {
                 {errosForm.carga_horaria && <span className={estilos.msgErro}>{errosForm.carga_horaria}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Turno</label>
+                <label className={estilos.rotulo} htmlFor="turno">Turno</label>
                 <select
+                  id="turno"
                   className={`${estilos.campo} ${errosForm.turno ? estilos.campoErro : ''}`}
                   value={formulario.turno}
                   onChange={(e) => setFormulario({ ...formulario, turno: e.target.value })}

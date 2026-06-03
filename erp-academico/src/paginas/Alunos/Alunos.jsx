@@ -142,7 +142,7 @@ function Alunos() {
         </button>
       </div>
 
-      {erro && <div className={estilos.erro}>{erro}</div>}
+      {erro && <div className={estilos.erro}>{erro} <button className={estilos.botaoFecharErro} onClick={() => setErro('')}>✕</button></div>}
 
       <div className={estilos.filtros}>
         <input
@@ -180,8 +180,9 @@ function Alunos() {
             <h2 className={estilos.modalTitulo}>{editando ? 'Editar Aluno' : 'Novo Aluno'}</h2>
             <form onSubmit={aoSalvar}>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Nome Completo</label>
+                <label className={estilos.rotulo} htmlFor="nome">Nome Completo</label>
                 <input
+                  id="nome"
                   type="text"
                   className={`${estilos.campo} ${errosForm.nome ? estilos.campoErro : ''}`}
                   value={formulario.nome}
@@ -191,8 +192,9 @@ function Alunos() {
                 {errosForm.nome && <span className={estilos.msgErro}>{errosForm.nome}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>E-mail</label>
+                <label className={estilos.rotulo} htmlFor="email">E-mail</label>
                 <input
+                  id="email"
                   type="email"
                   className={`${estilos.campo} ${errosForm.email ? estilos.campoErro : ''}`}
                   value={formulario.email}
@@ -202,8 +204,9 @@ function Alunos() {
                 {errosForm.email && <span className={estilos.msgErro}>{errosForm.email}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Idade</label>
+                <label className={estilos.rotulo} htmlFor="idade">Idade</label>
                 <input
+                  id="idade"
                   type="number"
                   className={`${estilos.campo} ${errosForm.idade ? estilos.campoErro : ''}`}
                   value={formulario.idade}
@@ -215,8 +218,9 @@ function Alunos() {
                 {errosForm.idade && <span className={estilos.msgErro}>{errosForm.idade}</span>}
               </div>
               <div className={estilos.grupoCampo}>
-                <label className={estilos.rotulo}>Curso</label>
+                <label className={estilos.rotulo} htmlFor="curso_id">Curso</label>
                 <select
+                  id="curso_id"
                   className={`${estilos.campo} ${errosForm.curso_id ? estilos.campoErro : ''}`}
                   value={formulario.curso_id}
                   onChange={(e) => setFormulario({ ...formulario, curso_id: e.target.value })}
