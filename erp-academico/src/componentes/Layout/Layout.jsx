@@ -1,3 +1,5 @@
+// Layout — Componente que define a estrutura visual (barra lateral + conteúdo)
+// Usa <Outlet /> do React Router para renderizar as páginas filhas
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAutenticacao } from '../../contextos/ContextoAutenticacao';
@@ -21,6 +23,7 @@ function Layout() {
     setMostrarConfirmacao(false);
   }
 
+  // Itens do menu de navegação lateral
   const itensMenu = [
     { caminho: '/', icone: '📊', rotulo: 'Painel Inicial' },
     { caminho: '/alunos', icone: '👨‍🎓', rotulo: 'Alunos' },

@@ -1,3 +1,5 @@
+// Funções CRUD genéricas para o Firestore (banco de dados do Firebase)
+// Cada função recebe o nome da coleção e executa a operação correspondente
 import {
   collection,
   doc,
@@ -9,6 +11,7 @@ import {
 } from 'firebase/firestore';
 import { db } from './configuracao';
 
+// CREATE — Cria um novo documento na coleção informada
 export async function criarDocumento(colecao, dados) {
   try {
     const ref = await addDoc(collection(db, colecao), {
@@ -21,6 +24,7 @@ export async function criarDocumento(colecao, dados) {
   }
 }
 
+// READ (todos) — Busca todos os documentos de uma coleção
 export async function buscarTodos(colecao) {
   try {
     const snapshot = await getDocs(collection(db, colecao));
@@ -34,6 +38,7 @@ export async function buscarTodos(colecao) {
   }
 }
 
+// READ (por ID) — Busca um documento específico pelo ID
 export async function buscarPorId(colecao, id) {
   try {
     const docRef = doc(db, colecao, id);
@@ -47,6 +52,7 @@ export async function buscarPorId(colecao, id) {
   }
 }
 
+// UPDATE — Atualiza um documento existente pelo ID
 export async function atualizarDocumento(colecao, id, dados) {
   try {
     const docRef = doc(db, colecao, id);
@@ -60,6 +66,7 @@ export async function atualizarDocumento(colecao, id, dados) {
   }
 }
 
+// DELETE — Exclui um documento pelo ID
 export async function excluirDocumento(colecao, id) {
   try {
     const docRef = doc(db, colecao, id);
@@ -69,4 +76,3 @@ export async function excluirDocumento(colecao, id) {
     return { sucesso: false, mensagem: 'Erro ao excluir registro: ' + erro.message };
   }
 }
-

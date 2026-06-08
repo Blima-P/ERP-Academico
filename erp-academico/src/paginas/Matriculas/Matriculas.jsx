@@ -1,3 +1,6 @@
+// Matrículas — Página de CRUD que relaciona Alunos e Cursos
+// O curso é preenchido automaticamente ao selecionar o aluno (vem do cadastro)
+// Possui Create, Read (com TabelaDados reutilizável), Update e Delete
 import { useState, useEffect } from 'react';
 import { buscarTodos, criarDocumento, atualizarDocumento, excluirDocumento } from '../../firebase/banco';
 import TabelaDados from '../../componentes/TabelaDados/TabelaDados';

@@ -4,8 +4,15 @@
 }
 
 @keyframes entrarPagina {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .saudacao {
@@ -52,10 +59,21 @@
   transition: opacity var(--transition);
 }
 
-.cartao:nth-child(1)::before { background: linear-gradient(180deg, #4f46e5, #7c3aed); }
-.cartao:nth-child(2)::before { background: linear-gradient(180deg, #10b981, #059669); }
-.cartao:nth-child(3)::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
-.cartao:nth-child(4)::before { background: linear-gradient(180deg, #3b82f6, #2563eb); }
+.cartao:nth-child(1)::before {
+  background: linear-gradient(180deg, #4f46e5, #7c3aed);
+}
+
+.cartao:nth-child(2)::before {
+  background: linear-gradient(180deg, #10b981, #059669);
+}
+
+.cartao:nth-child(3)::before {
+  background: linear-gradient(180deg, #f59e0b, #d97706);
+}
+
+.cartao:nth-child(4)::before {
+  background: linear-gradient(180deg, #3b82f6, #2563eb);
+}
 
 .cartao:hover::before {
   opacity: 1;
@@ -79,10 +97,21 @@
   background: var(--secondary);
 }
 
-.cartao:nth-child(1) .cartaoIcone { background: rgba(79, 70, 229, 0.08); }
-.cartao:nth-child(2) .cartaoIcone { background: rgba(16, 185, 129, 0.08); }
-.cartao:nth-child(3) .cartaoIcone { background: rgba(245, 158, 11, 0.08); }
-.cartao:nth-child(4) .cartaoIcone { background: rgba(59, 130, 246, 0.08); }
+.cartao:nth-child(1) .cartaoIcone {
+  background: rgba(79, 70, 229, 0.08);
+}
+
+.cartao:nth-child(2) .cartaoIcone {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.cartao:nth-child(3) .cartaoIcone {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.cartao:nth-child(4) .cartaoIcone {
+  background: rgba(59, 130, 246, 0.08);
+}
 
 .cartaoTitulo {
   font-size: 13px;

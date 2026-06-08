@@ -1,3 +1,5 @@
+// App.js — Componente raiz que define todas as rotas da aplicação
+// Usa React Router para navegação e RotaPrivada para proteger páginas
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ProvedorAutenticacao } from './contextos/ContextoAutenticacao';
 import RotaPrivada from './componentes/RotaPrivada/RotaPrivada';
@@ -11,13 +13,14 @@ import Relatorio from './paginas/Relatorio/Relatorio';
 
 function App() {
   return (
+    // ProvedorAutenticacao envolve tudo para que qualquer componente acesse o estado de login
     <ProvedorAutenticacao>
       <BrowserRouter>
         <Routes>
-          {/* Rota pública */}
+          {/* Rota pública — qualquer um pode acessar */}
           <Route path="/login" element={<Login />} />
 
-          {/* Rotas protegidas */}
+          {/* Rotas protegidas — só acessíveis se estiver logado */}
           <Route
             path="/"
             element={
@@ -26,6 +29,7 @@ function App() {
               </RotaPrivada>
             }
           >
+            {/* Rotas filhas renderizadas dentro do Layout via <Outlet /> */}
             <Route index element={<PainelInicial />} />
             <Route path="alunos" element={<Alunos />} />
             <Route path="cursos" element={<Cursos />} />
@@ -33,7 +37,7 @@ function App() {
             <Route path="relatorio" element={<Relatorio />} />
           </Route>
 
-          {/* Qualquer rota desconhecida redireciona para / */}
+          {/* Qualquer rota desconhecida redireciona para a página inicial */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

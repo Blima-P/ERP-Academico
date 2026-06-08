@@ -1,3 +1,6 @@
+// Alunos — Página de CRUD completo para gerenciar alunos
+// Cada aluno é associado a um curso (chave estrangeira: curso_id)
+// Possui Create, Read (com TabelaDados reutilizável), Update e Delete
 import { useState, useEffect } from 'react';
 import { buscarTodos, criarDocumento, atualizarDocumento, excluirDocumento } from '../../firebase/banco';
 import TabelaDados from '../../componentes/TabelaDados/TabelaDados';
