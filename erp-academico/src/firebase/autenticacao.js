@@ -1,12 +1,11 @@
-// Funções de autenticação — login, logout e recuperação de senha
+// Funções de autenticação — login e logout
 import {
   signInWithEmailAndPassword,
-  signOut,
-  sendPasswordResetEmail
+  signOut
 } from 'firebase/auth';
 import { auth } from './configuracao';
 
-// Traduz os códigos de erro do Firebase para mensagens amigáveis em português
+// Traduz os códigos de erro do Firebase para mensagens em português
 function traduzirErro(codigoErro) {
   const erros = {
     'auth/user-not-found': 'Usuário não encontrado',
@@ -21,12 +20,13 @@ function traduzirErro(codigoErro) {
 }
 
 // Faz login com e-mail e senha usando o Firebase Auth
+//função assincrona espera a resposta do servidor do firebase para saber se o login foi bem sucedido ou não.
 export async function entrarComEmail(email, senha) {
   try {
     const resultado = await signInWithEmailAndPassword(auth, email, senha);
-    return { sucesso: true, usuario: resultado.user };
+    return { sucesso: true, usuario: resultado.user };//se o login for bem sucedido, retorna o usuário logado
   } catch (erro) {
-    return { sucesso: false, mensagem: traduzirErro(erro.code) };
+    return { sucesso: false, mensagem: traduzirErro(erro.code) };//se o login falhar, retorna a mensagem de erro traduzida
   }
 }
 
@@ -34,22 +34,9 @@ export async function entrarComEmail(email, senha) {
 export async function sairDoSistema() {
   try {
     await signOut(auth);
-    return { sucesso: true };
+    return { sucesso: true };//se o logout for bem sucedido, retorna sucesso
   } catch (erro) {
-    return { sucesso: false, mensagem: 'Erro ao sair do sistema' };
+    return { sucesso: false, mensagem: 'Erro ao sair do sistema' };//se o logout falhar, retorna a mensagem de erro
   }
 }
 
-// Envia e-mail de redefinição de senha
-export async function enviarRedefinicaoSenha(email) {
-  try {
-    await sendPasswordResetEmail(auth, email);
-    return { sucesso: true, mensagem: 'E-mail de redefinição enviado!' };
-  } catch (erro) {
-    const erros = {
-      'auth/user-not-found': 'E-mail não cadastrado',
-      'auth/invalid-email': 'E-mail inválido'
-    };
-    return { sucesso: false, mensagem: erros[erro.code] || 'Erro ao enviar e-mail' };
-  }
-}
