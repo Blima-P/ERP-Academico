@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/configuracao';
-import { entrarComEmail, sairDoSistema, enviarRedefinicaoSenha } from '../firebase/autenticacao';
+import { entrarComEmail, sairDoSistema } from '../firebase/autenticacao';
 
 const ContextoAutenticacao = createContext();
 
@@ -45,15 +45,9 @@ export function ProvedorAutenticacao({ children }) {
     return resultado;
   }
 
-  // Função para redefinir senha
-  async function redefinirSenha(email) {
-    const resultado = await enviarRedefinicaoSenha(email);
-    return resultado;
-  }
-
   // Provider disponibiliza os valores para todos os componentes filhos
   return (
-    <ContextoAutenticacao.Provider value={{ usuario, estaAutenticado, carregando, entrar, sair, redefinirSenha }}>
+    <ContextoAutenticacao.Provider value={{ usuario, estaAutenticado, carregando, entrar, sair }}>
       {children}
     </ContextoAutenticacao.Provider>
   );
