@@ -7,28 +7,33 @@ import TabelaDados from '../../componentes/TabelaDados/TabelaDados';
 import estilos from './Alunos.module.css';
 
 function Alunos() {
-  const [alunos, setAlunos] = useState([]);
-  const [cursos, setCursos] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [editando, setEditando] = useState(null);
-  const [excluindo, setExcluindo] = useState(null);
-  const [busca, setBusca] = useState('');
-  const [salvando, setSalvando] = useState(false);
-  const [erro, setErro] = useState('');
+  // === ESTADOS (useState) ===
+  const [alunos, setAlunos] = useState([]);               // lista de alunos do Firestore
+  const [cursos, setCursos] = useState([]);               // lista de cursos (para o select do formulário)
+  const [carregando, setCarregando] = useState(true);     // controla o loading da página
+  const [mostrarFormulario, setMostrarFormulario] = useState(false); // abre/fecha o modal do form
+  const [editando, setEditando] = useState(null);         // se tem valor = modo edição (UPDATE), se null = modo criação (CREATE)
+  const [excluindo, setExcluindo] = useState(null);       // guarda o aluno que será excluído (abre modal de confirmação)
+  const [busca, setBusca] = useState('');                  // texto digitado no campo de busca
+  const [salvando, setSalvando] = useState(false);        // desabilita o botão enquanto salva
+  const [erro, setErro] = useState('');                   // mensagem de erro geral
 
+  // Estado do formulário — campos do aluno
   const [formulario, setFormulario] = useState({
     nome: '',
     email: '',
     idade: '',
-    curso_id: ''
+    curso_id: ''  // chave estrangeira — referencia o ID de um curso
   });
-  const [errosForm, setErrosForm] = useState({});
+  const [errosForm, setErrosForm] = useState({}); // erros de validação por campo
 
+  // === CARREGAMENTO INICIAL ===
+  // useEffect com [] executa UMA vez quando o componente monta
   useEffect(() => {
     carregarDados();
   }, []);
 
+  // Busca alunos e cursos em paralelo usando Promise.all (mais rápido que sequencial)
   async function carregarDados() {
     setCarregando(true);
     const [resAlunos, resCursos] = await Promise.all([
@@ -41,11 +46,15 @@ function Alunos() {
     setCarregando(false);
   }
 
+  // Resolve o nome do curso a partir do curso_id (chave estrangeira)
+  // Usa find() para buscar no array de cursos
   function getNomeCurso(cursoId) {
     const curso = cursos.find((c) => c.id === cursoId);
     return curso ? curso.nome : 'Curso não encontrado';
   }
 
+  // === VALIDAÇÃO DO FORMULÁRIO ===
+  // Retorna objeto com erros por campo; se vazio = formulário válido
   function validar() {
     const erros = {};
     if (!formulario.nome.trim() || formulario.nome.trim().length < 3) {
@@ -54,7 +63,7 @@ function Alunos() {
     if (!formulario.email.trim()) {
       erros.email = 'E-mail é obrigatório';
     } else {
-      const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // valida formato email
       if (!regexEmail.test(formulario.email)) erros.email = 'Formato de e-mail inválido';
     }
     const idade = parseInt(formulario.idade);
@@ -67,59 +76,68 @@ function Alunos() {
     return erros;
   }
 
+  // === CREATE / UPDATE — Salvar aluno ===
+  // Mesmo formulário serve para criar e editar
+  // Se 'editando' tem valor → UPDATE; senão → CREATE
   async function aoSalvar(e) {
-    e.preventDefault();
+    e.preventDefault(); // impede reload da página ao submeter o form
     const errosValidacao = validar();
     setErrosForm(errosValidacao);
-    if (Object.keys(errosValidacao).length > 0) return;
+    if (Object.keys(errosValidacao).length > 0) return; // tem erro? para aqui
 
     setSalvando(true);
     const dados = {
       nome: formulario.nome.trim(),
-      email: formulario.email.trim().toLowerCase(),
+      email: formulario.email.trim().toLowerCase(), // normaliza email
       idade: parseInt(formulario.idade),
       curso_id: formulario.curso_id
     };
 
     let resultado;
     if (editando) {
+      // UPDATE — atualiza o documento existente no Firestore
       resultado = await atualizarDocumento('alunos', editando.id, dados);
     } else {
+      // CREATE — cria novo documento no Firestore
       resultado = await criarDocumento('alunos', dados);
     }
 
     if (resultado.sucesso) {
       fecharFormulario();
-      await carregarDados();
+      await carregarDados(); // recarrega a lista atualizada
     } else {
       setErro(resultado.mensagem);
     }
     setSalvando(false);
   }
 
+  // === DELETE — Excluir aluno ===
+  // Chamado ao confirmar no modal de exclusão
   async function aoExcluir() {
     if (!excluindo) return;
     const resultado = await excluirDocumento('alunos', excluindo.id);
     if (resultado.sucesso) {
-      setExcluindo(null);
-      await carregarDados();
+      setExcluindo(null); // fecha o modal
+      await carregarDados(); // recarrega a lista
     } else {
       setErro(resultado.mensagem);
     }
   }
 
+  // Prepara o formulário para edição — preenche com os dados do aluno selecionado
   function abrirEditar(aluno) {
     setEditando(aluno);
     setFormulario({
       nome: aluno.nome,
       email: aluno.email,
-      idade: aluno.idade.toString(),
+      idade: aluno.idade.toString(), // converte para string pois o input type="number" espera string
       curso_id: aluno.curso_id
     });
     setErrosForm({});
     setMostrarFormulario(true);
   }
 
+  // Fecha o formulário e limpa todos os estados relacionados
   function fecharFormulario() {
     setMostrarFormulario(false);
     setEditando(null);
@@ -127,6 +145,9 @@ function Alunos() {
     setErrosForm({});
   }
 
+  // === FILTRO/BUSCA LOCAL ===
+  // filter() retorna apenas os alunos cujo nome OU email contém o texto buscado
+  // toLowerCase() garante busca case-insensitive (ignora maiúsculas)
   const alunosFiltrados = alunos.filter((a) =>
     a.nome.toLowerCase().includes(busca.toLowerCase()) ||
     a.email.toLowerCase().includes(busca.toLowerCase())
