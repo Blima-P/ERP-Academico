@@ -23,8 +23,8 @@ function Login() {
   }
 
   function validarEmail(valor) {
-    if (!valor.trim()) return 'Campo obrigatório';
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!valor.trim()) return 'Campo obrigatório';//.trim remove espaços em branco do início e do fim da string, garantindo que o campo não seja considerado válido apenas com espaços.
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;//regex para validar o formato do email, garantindo que ele contenha um "@" e um domínio válido.
     if (!regexEmail.test(valor)) return 'Formato de e-mail inválido';
     return '';
   }

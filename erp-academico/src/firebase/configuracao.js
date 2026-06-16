@@ -1,9 +1,9 @@
 // Configuração do Firebase — conecta o app React com o projeto Firebase
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';//cria projeto com o projeto firebase usado as credenciais
+import { getAuth } from 'firebase/auth';//ativa o serviço de autenticação do firebase(login e logout)
+import { getFirestore } from 'firebase/firestore';//ativa o BD(usado nos cruds)
 
-// Credenciais do Firebase lidas das variáveis de ambiente (.env)
+// Credenciais do Firebase lidas das variáveis de ambiente (.env por segurança, se não ele nao sobe para o github)
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
