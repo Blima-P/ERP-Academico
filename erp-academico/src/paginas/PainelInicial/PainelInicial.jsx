@@ -7,10 +7,10 @@ import { buscarTodos } from '../../firebase/banco';
 import estilos from './PainelInicial.module.css';
 
 function PainelInicial() {
-  const { usuario } = useAutenticacao();
+  const { usuario } = useAutenticacao(); // pega o nome do usuário logado
   const navegar = useNavigate();
-  const [contagens, setContagens] = useState({ alunos: 0, cursos: 0, matriculas: 0 });
-  const [ultimasMatriculas, setUltimasMatriculas] = useState([]);
+  const [contagens, setContagens] = useState({ alunos: 0, cursos: 0, matriculas: 0 }); // totais para os cards
+  const [ultimasMatriculas, setUltimasMatriculas] = useState([]); // últimas 5 matrículas (com JOIN)
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
@@ -18,24 +18,27 @@ function PainelInicial() {
   }, []);
 
   async function carregarDados() {
+    // Busca as 3 coleções em paralelo
     const [resAlunos, resCursos, resMatriculas] = await Promise.all([
       buscarTodos('alunos'),
       buscarTodos('cursos'),
       buscarTodos('matriculas')
     ]);
 
+    // Calcula as contagens para os cards do dashboard
     setContagens({
       alunos: resAlunos.sucesso ? resAlunos.dados.length : 0,
       cursos: resCursos.sucesso ? resCursos.dados.length : 0,
       matriculas: resMatriculas.sucesso ? resMatriculas.dados.length : 0
     });
 
-    // Últimas 5 matrículas
+    // JOIN: cruza matrículas com alunos e cursos para mostrar as últimas 5
     if (resMatriculas.sucesso && resAlunos.sucesso && resCursos.sucesso) {
       const ultimas = resMatriculas.dados
-        .sort((a, b) => (b.criadoEm || '').localeCompare(a.criadoEm || ''))
-        .slice(0, 5)
+        .sort((a, b) => (b.criadoEm || '').localeCompare(a.criadoEm || '')) // ordena por data (mais recente primeiro)
+        .slice(0, 5) // pega só as 5 primeiras
         .map((m) => {
+          // find() busca o aluno e o curso correspondentes (JOIN)
           const aluno = resAlunos.dados.find((a) => a.id === m.aluno_id);
           const curso = resCursos.dados.find((c) => c.id === m.curso_id);
           return {
@@ -50,6 +53,8 @@ function PainelInicial() {
     setCarregando(false);
   }
 
+  // Configuração dos 4 cards do dashboard
+  // Cada card é clicável e navega para a página correspondente
   const cartoes = [
     { icone: '👨‍🎓', titulo: 'Total de Alunos', valor: carregando ? '...' : contagens.alunos, caminho: '/alunos' },
     { icone: '📚', titulo: 'Total de Cursos', valor: carregando ? '...' : contagens.cursos, caminho: '/cursos' },
