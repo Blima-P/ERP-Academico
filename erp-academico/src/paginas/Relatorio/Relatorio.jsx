@@ -12,6 +12,7 @@ function Relatorio() {
   const [carregando, setCarregando] = useState(true);
   const [filtroCurso, setFiltroCurso] = useState('');
   const [filtroStatus, setFiltroStatus] = useState('');
+  const [filtroAluno, setFiltroAluno] = useState('');
 
   useEffect(() => {
     carregarDados();
@@ -30,10 +31,20 @@ function Relatorio() {
     setCarregando(false);
   }
 
-  // JOIN: cruzar matrículas com alunos e cursos usando map/find
+  // Criando mapas para buscar por ID
+  const alunosMap = new Map(
+    alunos.map((aluno) => [aluno.id, aluno])
+  );
+
+  const cursosMap = new Map(
+    cursos.map((curso) => [curso.id, curso])
+  );
+
+  // JOIN: cruzar matrículas com alunos e cursos usando map
   const dadosRelatorio = matriculas.map((matricula) => {
-    const aluno = alunos.find((a) => a.id === matricula.aluno_id);
-    const curso = cursos.find((c) => c.id === matricula.curso_id);
+    const aluno = alunosMap.get(matricula.aluno_id);
+    const curso = cursosMap.get(matricula.curso_id);
+
     return {
       id: matricula.id,
       nomeAluno: aluno ? aluno.nome : 'Aluno não encontrado',
@@ -48,6 +59,11 @@ function Relatorio() {
 
   // Aplicar filtros
   const dadosFiltrados = dadosRelatorio
+    .filter(
+     (d) =>
+        !filtroAluno ||
+        d.nomeAluno.toLowerCase().includes(filtroAluno.toLowerCase())
+    )
     .filter((d) => !filtroCurso || d.nomeCurso === filtroCurso)
     .filter((d) => !filtroStatus || d.status === filtroStatus);
 
@@ -108,6 +124,13 @@ function Relatorio() {
 
       {/* Filtros */}
       <div className={estilos.filtros}>
+        <input
+          className={estilos.campoFiltro}
+          type="text"
+          placeholder="Buscar aluno..."
+          value={filtroAluno}
+          onChange={(e) => setFiltroAluno(e.target.value)}
+        />
         <select
           className={estilos.campoFiltro}
           value={filtroCurso}
