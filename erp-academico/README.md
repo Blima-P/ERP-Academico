@@ -1,4 +1,4 @@
-# ERP Acadêmico — App React 🎓
+# ERP Acadêmico — App React 
 
 Aplicação frontend do sistema ERP Acadêmico.
 
