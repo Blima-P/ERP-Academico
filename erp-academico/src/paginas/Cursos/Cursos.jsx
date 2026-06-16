@@ -7,26 +7,31 @@ import TabelaDados from '../../componentes/TabelaDados/TabelaDados';
 import estilos from './Cursos.module.css';
 
 function Cursos() {
-  const [cursos, setCursos] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [editando, setEditando] = useState(null);
-  const [excluindo, setExcluindo] = useState(null);
-  const [busca, setBusca] = useState('');
-  const [salvando, setSalvando] = useState(false);
-  const [erro, setErro] = useState('');
+  // === ESTADOS (useState) ===
+  const [cursos, setCursos] = useState([]);               // lista de cursos do Firestore
+  const [carregando, setCarregando] = useState(true);     // controla o loading da página
+  const [mostrarFormulario, setMostrarFormulario] = useState(false); // abre/fecha o modal do form
+  const [editando, setEditando] = useState(null);         // se tem valor = UPDATE, se null = CREATE
+  const [excluindo, setExcluindo] = useState(null);       // guarda o curso a ser excluído
+  const [busca, setBusca] = useState('');                  // texto do campo de busca
+  const [salvando, setSalvando] = useState(false);        // desabilita botão durante salvamento
+  const [erro, setErro] = useState('');                   // mensagem de erro
 
+  // Estado do formulário — campos do curso
   const [formulario, setFormulario] = useState({
     nome: '',
     carga_horaria: '',
     turno: ''
   });
-  const [errosForm, setErrosForm] = useState({});
+  const [errosForm, setErrosForm] = useState({}); // erros de validação por campo
 
+  // === CARREGAMENTO INICIAL ===
+  // useEffect com [] executa UMA vez quando o componente monta
   useEffect(() => {
     carregarCursos();
   }, []);
 
+  // Busca todos os cursos da coleção 'cursos' no Firestore
   async function carregarCursos() {
     setCarregando(true);
     const resultado = await buscarTodos('cursos');
@@ -38,6 +43,7 @@ function Cursos() {
     setCarregando(false);
   }
 
+  // === VALIDAÇÃO DO FORMULÁRIO ===
   function validar() {
     const erros = {};
     if (!formulario.nome.trim() || formulario.nome.trim().length < 3) {
@@ -52,46 +58,51 @@ function Cursos() {
     return erros;
   }
 
+  // === CREATE / UPDATE — Salvar curso ===
   async function aoSalvar(e) {
-    e.preventDefault();
+    e.preventDefault(); // impede reload da página
     const errosValidacao = validar();
     setErrosForm(errosValidacao);
-    if (Object.keys(errosValidacao).length > 0) return;
+    if (Object.keys(errosValidacao).length > 0) return; // se tem erro, para
 
     setSalvando(true);
     const dados = {
       nome: formulario.nome.trim(),
-      carga_horaria: parseInt(formulario.carga_horaria),
+      carga_horaria: parseInt(formulario.carga_horaria), // converte string → número
       turno: formulario.turno
     };
 
     let resultado;
     if (editando) {
+      // UPDATE — atualiza curso existente
       resultado = await atualizarDocumento('cursos', editando.id, dados);
     } else {
+      // CREATE — cria novo curso
       resultado = await criarDocumento('cursos', dados);
     }
 
     if (resultado.sucesso) {
       fecharFormulario();
-      await carregarCursos();
+      await carregarCursos(); // recarrega a lista
     } else {
       setErro(resultado.mensagem);
     }
     setSalvando(false);
   }
 
+  // === DELETE — Excluir curso ===
   async function aoExcluir() {
     if (!excluindo) return;
     const resultado = await excluirDocumento('cursos', excluindo.id);
     if (resultado.sucesso) {
-      setExcluindo(null);
+      setExcluindo(null); // fecha modal
       await carregarCursos();
     } else {
       setErro(resultado.mensagem);
     }
   }
 
+  // Prepara o formulário para edição — preenche com dados do curso selecionado
   function abrirEditar(curso) {
     setEditando(curso);
     setFormulario({
@@ -103,6 +114,7 @@ function Cursos() {
     setMostrarFormulario(true);
   }
 
+  // Fecha o formulário e limpa todos os estados
   function fecharFormulario() {
     setMostrarFormulario(false);
     setEditando(null);
@@ -110,6 +122,8 @@ function Cursos() {
     setErrosForm({});
   }
 
+  // === FILTRO/BUSCA LOCAL ===
+  // filter() retorna apenas cursos cujo nome contém o texto buscado
   const cursosFiltrados = cursos.filter((c) =>
     c.nome.toLowerCase().includes(busca.toLowerCase())
   );
