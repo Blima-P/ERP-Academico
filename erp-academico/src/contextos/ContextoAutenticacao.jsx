@@ -1,7 +1,7 @@
 // Contexto de Autenticação — gerencia o estado de login em toda a aplicação
 // Utiliza Context API do React para compartilhar dados do usuário entre componentes
-import { createContext, useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { createContext, useContext, useState, useEffect } from 'react';//Func Firebase
+import { onAuthStateChanged } from 'firebase/auth';//listener
 import { auth } from '../firebase/configuracao';
 import { entrarComEmail, sairDoSistema } from '../firebase/autenticacao';
 
