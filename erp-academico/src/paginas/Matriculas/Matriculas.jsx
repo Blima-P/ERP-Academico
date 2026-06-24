@@ -1,39 +1,32 @@
-// Matrículas — Página de CRUD que relaciona Alunos e Cursos
-// O curso é preenchido automaticamente ao selecionar o aluno (vem do cadastro)
-// Possui Create, Read (com TabelaDados reutilizável), Update e Delete
 import { useState, useEffect } from 'react';
 import { buscarTodos, criarDocumento, atualizarDocumento, excluirDocumento } from '../../firebase/banco';
 import TabelaDados from '../../componentes/TabelaDados/TabelaDados';
 import estilos from './Matriculas.module.css';
 
 function Matriculas() {
-  // === ESTADOS (useState) ===
-  const [matriculas, setMatriculas] = useState([]);       // lista de matrículas
-  const [alunos, setAlunos] = useState([]);               // lista de alunos (para o select e resolução de nomes)
-  const [cursos, setCursos] = useState([]);               // lista de cursos (para resolução de nomes)
-  const [carregando, setCarregando] = useState(true);     // loading da página
-  const [mostrarFormulario, setMostrarFormulario] = useState(false); // modal do form
-  const [editando, setEditando] = useState(null);         // UPDATE se tem valor, CREATE se null
-  const [excluindo, setExcluindo] = useState(null);       // matrícula a ser excluída
-  const [filtroStatus, setFiltroStatus] = useState('');   // filtro por status (Ativa/Trancada/Concluída)
-  const [salvando, setSalvando] = useState(false);        // controle do botão salvar
-  const [erro, setErro] = useState('');                   // mensagem de erro
+  const [matriculas, setMatriculas] = useState([]);
+  const [alunos, setAlunos] = useState([]);
+  const [cursos, setCursos] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [editando, setEditando] = useState(null);
+  const [excluindo, setExcluindo] = useState(null);
+  const [filtroStatus, setFiltroStatus] = useState('');
+  const [salvando, setSalvando] = useState(false);
+  const [erro, setErro] = useState('');
 
-  // Estado do formulário — campos da matrícula
   const [formulario, setFormulario] = useState({
-    aluno_id: '',        // chave estrangeira → Alunos
-    curso_id: '',        // chave estrangeira → Cursos (preenchido automaticamente)
+    aluno_id: '',
+    curso_id: '',
     data_matricula: '',
-    status: 'Ativa'      // valor padrão
+    status: 'Ativa'
   });
   const [errosForm, setErrosForm] = useState({});
 
-  // === CARREGAMENTO INICIAL ===
   useEffect(() => {
     carregarDados();
   }, []);
 
-  // Busca as 3 coleções em paralelo (Promise.all)
   async function carregarDados() {
     setCarregando(true);
     const [resMatriculas, resAlunos, resCursos] = await Promise.all([
@@ -48,19 +41,16 @@ function Matriculas() {
     setCarregando(false);
   }
 
-  // Resolve nome do aluno a partir do ID (chave estrangeira)
   function getNomeAluno(alunoId) {
     const aluno = alunos.find((a) => a.id === alunoId);
     return aluno ? aluno.nome : 'Aluno não encontrado';
   }
 
-  // Resolve nome do curso a partir do ID (chave estrangeira)
   function getNomeCurso(cursoId) {
     const curso = cursos.find((c) => c.id === cursoId);
     return curso ? curso.nome : 'Curso não encontrado';
   }
 
-  // === VALIDAÇÃO ===
   function validar() {
     const erros = {};
     if (!formulario.aluno_id) erros.aluno_id = 'Selecione um aluno';
@@ -68,8 +58,6 @@ function Matriculas() {
     if (!formulario.data_matricula) erros.data_matricula = 'Data é obrigatória';
     if (!formulario.status) erros.status = 'Selecione um status';
 
-    // Validação de duplicata — impede matricular o mesmo aluno no mesmo curso 2x
-    // Usa find() para verificar se já existe uma matrícula com mesmo aluno_id + curso_id
     if (formulario.aluno_id && formulario.curso_id) {
       const duplicata = matriculas.find(
         (m) => m.aluno_id === formulario.aluno_id && m.curso_id === formulario.curso_id && (!editando || m.id !== editando.id)
@@ -81,7 +69,6 @@ function Matriculas() {
     return erros;
   }
 
-  // === CREATE / UPDATE ===
   async function aoSalvar(e) {
     e.preventDefault();
     const errosValidacao = validar();
@@ -112,7 +99,6 @@ function Matriculas() {
     setSalvando(false);
   }
 
-  // === DELETE ===
   async function aoExcluir() {
     if (!excluindo) return;
     const resultado = await excluirDocumento('matriculas', excluindo.id);
@@ -124,8 +110,6 @@ function Matriculas() {
     }
   }
 
-  // Prepara formulário para edição
-  // Busca o curso_id do aluno para preencher automaticamente
   function abrirEditar(matricula) {
     setEditando(matricula);
     const aluno = alunos.find((a) => a.id === matricula.aluno_id);
@@ -146,7 +130,6 @@ function Matriculas() {
     setErrosForm({});
   }
 
-  // Retorna a classe CSS correspondente ao status (cores diferentes)
   function getCorStatus(status) {
     switch (status) {
       case 'Ativa': return estilos.badgeAtiva;
@@ -156,8 +139,6 @@ function Matriculas() {
     }
   }
 
-  // === FILTRO POR STATUS ===
-  // Se filtroStatus está vazio, mostra todas; senão filtra pelo status selecionado
   const matriculasFiltradas = filtroStatus
     ? matriculas.filter((m) => m.status === filtroStatus)
     : matriculas;
@@ -209,7 +190,6 @@ function Matriculas() {
         />
       )}
 
-      {/* Modal Formulário */}
       {mostrarFormulario && (
         <div className={estilos.modalFundo} onClick={fecharFormulario}>
           <div className={estilos.modal} onClick={(e) => e.stopPropagation()}>
@@ -286,7 +266,6 @@ function Matriculas() {
         </div>
       )}
 
-      {/* Modal Excluir */}
       {excluindo && (
         <div className={estilos.modalFundo} onClick={() => setExcluindo(null)}>
           <div className={estilos.modal} onClick={(e) => e.stopPropagation()}>
