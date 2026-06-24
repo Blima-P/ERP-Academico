@@ -1,34 +1,26 @@
-// Layout — Componente que define a estrutura visual (barra lateral + conteúdo)
-// Usa <Outlet /> do React Router para renderizar as páginas filhas dentro da área principal
-// Inclui modal de confirmação de logout
 import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAutenticacao } from '../../contextos/ContextoAutenticacao';
 import estilos from './Layout.module.css';
 
 function Layout() {
-  const { usuario, sair } = useAutenticacao(); // pega dados do usuário e função de logout
+  const { usuario, sair } = useAutenticacao();
   const navegar = useNavigate();
-  const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false); // controla o modal de logout
+  const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
 
-  // Abre o modal de confirmação ao clicar em "Sair"
   function aoSair() {
     setMostrarConfirmacao(true);
   }
 
-  // Confirma logout: chama sair() do contexto e redireciona para /login
   async function confirmarSaida() {
     await sair();
     navegar('/login');
   }
 
-  // Cancela o logout e fecha o modal
   function cancelarSaida() {
     setMostrarConfirmacao(false);
   }
 
-  // Itens do menu de navegação lateral
-  // Cada item tem caminho (rota), ícone (emoji) e rótulo (texto)
   const itensMenu = [
     { caminho: '/', icone: '📊', rotulo: 'Painel Inicial' },
     { caminho: '/alunos', icone: '👨‍🎓', rotulo: 'Alunos' },
@@ -39,7 +31,6 @@ function Layout() {
 
   return (
     <div className={estilos.layout}>
-      {/* Modal de confirmação de logout */}
       {mostrarConfirmacao && (
         <div className={estilos.modalFundo} onClick={cancelarSaida}>
           <div className={estilos.modal} onClick={(e) => e.stopPropagation()}>
@@ -59,7 +50,6 @@ function Layout() {
         </div>
       )}
 
-      {/* Barra Lateral */}
       <aside className={estilos.barraLateral}>
         <div className={estilos.cabecalhoLateral}>
           <h2 className={estilos.logoLateral}>🎓 ERP Acadêmico</h2>
@@ -86,7 +76,6 @@ function Layout() {
         </div>
       </aside>
 
-      {/* Área principal */}
       <div className={estilos.principal}>
         <header className={estilos.cabecalho}>
           <span className={estilos.nomeUsuario}>👤 Olá, {usuario?.nome}</span>

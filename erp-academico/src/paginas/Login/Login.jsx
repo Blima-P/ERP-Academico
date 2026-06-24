@@ -1,12 +1,9 @@
-// Login — Tela de autenticação do sistema
-// Valida campos em tempo real e usa o contexto de autenticação para fazer login
 import { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAutenticacao } from '../../contextos/ContextoAutenticacao';
 import estilos from './Login.module.css';
 
 function Login() {
-  // Estados do formulário de login
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -17,14 +14,13 @@ function Login() {
   const { entrar, estaAutenticado } = useAutenticacao();
   const navegar = useNavigate();
 
-  // Se já está logado, redireciona para a página inicial
   if (estaAutenticado) {
     return <Navigate to="/" replace />;
   }
 
   function validarEmail(valor) {
-    if (!valor.trim()) return 'Campo obrigatório';//.trim remove espaços em branco do início e do fim da string, garantindo que o campo não seja considerado válido apenas com espaços.
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;//regex para validar o formato do email, garantindo que ele contenha um "@" e um domínio válido.
+    if (!valor.trim()) return 'Campo obrigatório';
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regexEmail.test(valor)) return 'Formato de e-mail inválido';
     return '';
   }

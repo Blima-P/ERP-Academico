@@ -1,11 +1,9 @@
-// Funções de autenticação — login e logout
 import {
   signInWithEmailAndPassword,
   signOut
 } from 'firebase/auth';
 import { auth } from './configuracao';
 
-// Traduz os códigos de erro do Firebase para mensagens em português
 function traduzirErro(codigoErro) {
   const erros = {
     'auth/user-not-found': 'Usuário não encontrado',
@@ -19,24 +17,21 @@ function traduzirErro(codigoErro) {
   return erros[codigoErro] || 'Erro ao fazer login. Tente novamente';
 }
 
-// Faz login com e-mail e senha usando o Firebase Auth
-//função assincrona espera a resposta do servidor do firebase para saber se o login foi bem sucedido ou não.
 export async function entrarComEmail(email, senha) {
   try {
     const resultado = await signInWithEmailAndPassword(auth, email, senha);
-    return { sucesso: true, usuario: resultado.user };//se o login for bem sucedido, retorna o usuário logado
+    return { sucesso: true, usuario: resultado.user };
   } catch (erro) {
-    return { sucesso: false, mensagem: traduzirErro(erro.code) };//se o login falhar, retorna a mensagem de erro traduzida
+    return { sucesso: false, mensagem: traduzirErro(erro.code) };
   }
 }
 
-// Faz logout do sistema
 export async function sairDoSistema() {
   try {
     await signOut(auth);
-    return { sucesso: true };//se o logout for bem sucedido, retorna sucesso
+    return { sucesso: true };
   } catch (erro) {
-    return { sucesso: false, mensagem: 'Erro ao sair do sistema' };//se o logout falhar, retorna a mensagem de erro
+    return { sucesso: false, mensagem: 'Erro ao sair do sistema' };
   }
 }
 

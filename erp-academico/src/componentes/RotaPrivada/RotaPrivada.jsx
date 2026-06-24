@@ -1,5 +1,3 @@
-// RotaPrivada — Componente que protege rotas, bloqueando acesso sem login
-// Se o usuário não estiver autenticado, redireciona para /login
 import { Navigate } from 'react-router-dom';
 import { useAutenticacao } from '../../contextos/ContextoAutenticacao';
 import estilos from './RotaPrivada.module.css';
@@ -7,7 +5,6 @@ import estilos from './RotaPrivada.module.css';
 function RotaPrivada({ children }) {
   const { estaAutenticado, carregando } = useAutenticacao();
 
-  // Enquanto verifica se o usuário está logado, mostra spinner de carregamento
   if (carregando) {
     return (
       <div className={estilos.carregandoContainer}>
@@ -17,12 +14,10 @@ function RotaPrivada({ children }) {
     );
   }
 
-  // Se não autenticado, redireciona para login
   if (!estaAutenticado) {
     return <Navigate to="/login" replace />;
   }
 
-  // Se autenticado, renderiza o conteúdo protegido (children)
   return children;
 }
 
