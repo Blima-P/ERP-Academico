@@ -1,4 +1,4 @@
-# ERP Acadêmico - Trabalho N2 
+# “Sistema de gestão acadêmica - ERP ACADÊMICO
 
 Sistema de gestão acadêmica desenvolvido em **React JS** para a matéria de **Programação Web** (UCB - Terça Noturno).
 
